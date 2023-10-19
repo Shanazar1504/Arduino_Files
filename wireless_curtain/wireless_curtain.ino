@@ -5,7 +5,7 @@
 #include <SoftwareSerial.h>
 
 const char* ssid = "Test";
-const char* password = "12345678";
+const char* password = "test1234";
 
 ESP8266WebServer server(80);
 

@@ -3,10 +3,10 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const int Relay1 = 4;
+const int Relay1 = 0;
 
-const char* ssid = "Test";
-const char* password = "12345678";
+const char* ssid = "Voice_assistant";
+const char* password = "1234567800";
 
 ESP8266WebServer server(80);
 void returnCheck() {
@@ -52,8 +52,8 @@ void setup() {
   server.begin();
   Serial.println("Server started");
   server.on("/check/", returnCheck);
-  server.on("/Relay_1_on/", Relay1on);
-  server.on("/Relay_1_off/", Relay1off);
+  server.on("/control/led_on/", Relay1on);
+  server.on("/control/led_off/", Relay1off);
 }
 
 void loop() {

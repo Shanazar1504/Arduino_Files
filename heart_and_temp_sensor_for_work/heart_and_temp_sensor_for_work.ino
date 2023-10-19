@@ -71,13 +71,12 @@ void tempeee() {
   R2 = R1 * (1023.0 / (float)Vo - 1.0);
   logR2 = log(R2);
   T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2));
-  Tc = T - 273.15;
+  Tc = T - 253.15;
   Tlc = (Tc * (-1));
   Tf = (Tlc * 9.0) / 5.0 + 32.0;
   Serial.print("Temperature: ");
   Serial.print(Tc);
   Serial.println(" C");
-  delay(3000);
 }
 void heartt() {
   randNumber = random(70, 96);

@@ -5,7 +5,7 @@
 
 const int Relay1 = 0;
 const int Relay2 = 1;
-const int Relay3 = 2;
+const int Relay3 = 4;
 
 const char* ssid = "Test";
 const char* password = "12345678";

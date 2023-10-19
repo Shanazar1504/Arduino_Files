@@ -17,8 +17,8 @@ const int enbA = 14;
 const int motA = 2;
 const int motB = 0;
 
-const char* ssid = "test";
-const char* password = "12345678";
+const char* ssid = "Sanly_Saglyk";
+const char* password = "000000001";
 
 ESP8266WebServer server(80);
 void returnMois() {
