@@ -6,7 +6,7 @@
 const int Relay1 = 0;
 
 const char* ssid = "Voice_assistant";
-const char* password = "1234567800";
+const char* password = "voice_assistant";
 
 ESP8266WebServer server(80);
 void returnCheck() {

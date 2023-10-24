@@ -1,36 +1,22 @@
+
+#include <tcs3200.h>
 #include <AFMotor.h>
 AF_DCMotor MotorFR(1);// Motor for drive Front Right on M1
 AF_DCMotor MotorFL(2); // Motor for drive Front Left on M2
 AF_DCMotor MotorBL(3); // Motor for drive Back Left on M3
 AF_DCMotor MotorBR(4); // Motor for drive Back Right on M4
 
+int red, green, blue, white;
 
-#define S0_PIN 14
-#define S1_PIN 15
-#define S2_PIN 16
-#define S3_PIN 17
-#define OUT_PIN 18
+tcs3200 tcs(14, 15, 16, 17, 18); // (S0, S1, S2, S3, output pin)  //
 
-int r, g, b;
-int valSpeed = 255;
+int valSpeed = 85;
 String readString; // declaring string
 
 void setup() {
-  Serial.begin(9600); // set up Serial library at 9600 bps
+  Serial.begin(9600);
   Serial.println("* Robot Conveyer *");
-  // Set the S0, S1, S2, S3 Pins as Output
-  pinMode(S0_PIN, OUTPUT);
-  pinMode(S1_PIN, OUTPUT);
-  pinMode(S2_PIN, OUTPUT);
-  pinMode(S3_PIN, OUTPUT);
-  //Set OUT_PIN as Input
-  pinMode(OUT_PIN, INPUT);
 
-  // Set Pulse Width scaling to 20%
-  digitalWrite(S0_PIN, HIGH);
-  digitalWrite(S1_PIN, LOW);
-
-  // Set the speed to start, from 0 (off) to 255 (max speed)
   MotorFL.setSpeed(valSpeed);
   MotorFR.setSpeed(valSpeed);
   MotorBL.setSpeed(valSpeed);
@@ -41,7 +27,15 @@ void setup() {
   MotorBL.run(RELEASE);
   MotorBR.run(RELEASE);
 }
+
 void loop() {
+
+  Commandd();
+  readColor();
+
+}
+
+void Commandd() {
   while (Serial.available() > 0) {
     char command = Serial.read();// gets one byte from serial buffer
     Serial.println(command);
@@ -159,90 +153,93 @@ void loop() {
         break;
     }
   }
-  r = process_red_value();
-  delay(200);
-  g = process_green_value();
-  delay(200);
-  b = process_blue_value();
-  delay(200);
-  Serial.print("r = ");
-  Serial.print(r);
-  Serial.print(" ");
-  Serial.print("g = ");
-  Serial.print(g);
-  Serial.print(" ");
-  Serial.print("b = ");
-  Serial.print(b);
-  Serial.print(" ");
-  Serial.println();
+}
 
-  if (r < 85 && g < 190 && b < 170)
-  {
-    Serial.println("Colour Red");
+void readColor() {
+
+  red = tcs.colorRead('r', 0);    //scaling can also be put to 0%, 20%, and 100% (default scaling is 20%)   ---    read more at: https://www.mouser.com/catalog/specsheets/TCS3200-E11.pdf
+  red = tcs.colorRead('r', 20);
+  red = tcs.colorRead('r', 100);
+
+  red = tcs.colorRead('r');   //reads color value for red
+  Serial.print("R= ");
+  Serial.print(red);
+  Serial.print("    ");
+
+  green = tcs.colorRead('g');   //reads color value for green
+  Serial.print("G= ");
+  Serial.print(green);
+  Serial.print("    ");
+
+  blue = tcs.colorRead('b');    //reads color value for blue
+  Serial.print("B= ");
+  Serial.print(blue);
+  Serial.print("    ");
+
+  white = tcs.colorRead('c');    //reads color value for white(clear)
+  Serial.print("W(clear)= ");
+  Serial.print(white);
+  Serial.print("    ");
+
+//  SetSpeed(valSpeed);
+//  MotorFL.run(RELEASE);
+//  MotorFR.run(FORWARD);
+//  MotorBL.run(FORWARD);
+//  MotorBR.run(RELEASE);
+
+  if (red <= 9 && green >= 5 ) {
+    delay(700);
     SetSpeed(valSpeed);
-    MotorFL.run(BACKWARD);
-    MotorFR.run(BACKWARD);
-    MotorBL.run(FORWARD);
-    MotorBR.run(FORWARD);
-    delay(1500);
     MotorFL.run(RELEASE);
-    MotorFR.run(RELEASE);
-    MotorBL.run(RELEASE);
+    MotorFR.run(FORWARD);
+    MotorBL.run(FORWARD);
     MotorBR.run(RELEASE);
-  }
-  else if (r > 160 && g > 145 && b < 180)
-  {
-    Serial.println("Colour Green");
-    SetSpeed(valSpeed);
+    delay(500);
+    Serial.println("GREEN");
+    SetSpeed(125);
     MotorFL.run(FORWARD);
     MotorFR.run(FORWARD);
     MotorBL.run(BACKWARD);
     MotorBR.run(BACKWARD);
-    delay(1500);
+    delay(1000);
     MotorFL.run(RELEASE);
     MotorFR.run(RELEASE);
     MotorBL.run(RELEASE);
     MotorBR.run(RELEASE);
-  }
-  else if (r < 100 && g < 122 && b < 99)
-  {
-    Serial.println("Colour White");
+  } else if (red >= 25 && blue <= 15) {
+    delay(700);
     SetSpeed(valSpeed);
+    MotorFL.run(RELEASE);
+    MotorFR.run(FORWARD);
+    MotorBL.run(FORWARD);
+    MotorBR.run(RELEASE);
+    delay(500);
+    Serial.println("RED");
+    SetSpeed(125);
+    MotorFL.run(BACKWARD);
+    MotorFR.run(BACKWARD);
+    MotorBL.run(FORWARD);
+    MotorBR.run(FORWARD);
+    delay(1000);
+    MotorFL.run(RELEASE);
+    MotorFR.run(RELEASE);
+    MotorBL.run(RELEASE);
+    MotorBR.run(RELEASE);
+  } else if (white >= 150) {
+    Serial.println("WHITE");
+    SetSpeed(85);
     MotorFL.run(BACKWARD);
     MotorFR.run(FORWARD);
     MotorBL.run(FORWARD);
     MotorBR.run(BACKWARD);
-    delay(1500);
+    delay(1000);
     MotorFL.run(RELEASE);
     MotorFR.run(RELEASE);
     MotorBL.run(RELEASE);
     MotorBR.run(RELEASE);
   }
-}
-
-
-int process_red_value()
-{
-  digitalWrite(S2_PIN, LOW);
-  digitalWrite(S3_PIN, LOW);
-  int pulse_length = pulseIn(OUT_PIN, LOW);
-  return pulse_length;
-}
-
-int process_green_value()
-{
-  digitalWrite(S2_PIN, HIGH);
-  digitalWrite(S3_PIN, HIGH);
-  int pulse_length = pulseIn(OUT_PIN, LOW);
-  return pulse_length;
-}
-
-int process_blue_value()
-{
-  digitalWrite(S2_PIN, LOW);
-  digitalWrite(S3_PIN, HIGH);
-  int pulse_length = pulseIn(OUT_PIN, LOW);
-  return pulse_length;
+  Serial.println();
+  //  delay(300);
 }
 
 //function for setting speed of motors

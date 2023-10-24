@@ -3,9 +3,15 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 #include <SoftwareSerial.h>
+#include <LiquidCrystal_I2C.h>
+
+int lcdColumns = 16;
+int lcdRows = 2;
+
+LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 
 const char* ssid = "Test";
-const char* password = "test1234";
+const char* password = "test12345";
 
 ESP8266WebServer server(80);
 
@@ -18,7 +24,7 @@ void handlePong() {
 
 
 void setup() {
- Serial.begin(115200);
+  Serial.begin(115200);
 
   // Connect to WiFi network
   Serial.println();
@@ -27,7 +33,7 @@ void setup() {
   Serial.println(ssid);
 
   WiFi.begin(ssid, password);
-//      WiFi.config();
+  //      WiFi.config();
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -47,6 +53,11 @@ void setup() {
   server.on("/ping/", handlePong);
   server.on("/control/", sendDataFromMaster);
 
+  lcd.begin();
+  lcd.clear();
+  lcd.backlight();
+  lcd.setCursor(2, 0);
+  lcd.print("Charging:");
 
 }
 
@@ -68,6 +79,8 @@ void sendDataFromMaster() {
   command.trim();
   if (command.length() > 0) {
     Serial.println(command);
+      lcd.setCursor(11, 1);
+  lcd.print(command + "%");
     // String argument_data = "?device_key="+device_key+"&command="+command+"&value="+String(stream);
     //sendRequest("http://"+serverUrl+"/esp/ArgToDB/",argument_data);
   }
