@@ -100,14 +100,14 @@ if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial())
     oc();}
     if ((strID.indexOf("03:79:B0:18") >=0)&&(a==0)) {
     oc1();
-  }else if ((strID.indexOf("0A:30:14:3F") >=0)&&(a==1)) {
+  }else if ((strID.indexOf("1D:FB:E8:A9") >=0)&&(a==1)) {
     bc();
-  }else if ((strID.indexOf("0A:30:14:3F") >=0)&&(a==0))  {
+  }else if ((strID.indexOf("1D:FB:E8:A9") >=0)&&(a==0))  {
     bc1();
   }
-  else if ((strID.indexOf("55:38:48:59") >=0)&&(a==1))  {
+  else if ((strID.indexOf("F4:12:23:89") >=0)&&(a==1))  {
     dc();
-  }else if ((strID.indexOf("55:38:48:59") >=0)&&(a==0))  {
+  }else if ((strID.indexOf("F4:12:23:89") >=0)&&(a==0))  {
     dc1();
   }
   rfid.PICC_HaltA();

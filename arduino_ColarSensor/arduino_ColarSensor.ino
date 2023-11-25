@@ -196,7 +196,7 @@ void readColor() {
     MotorBR.run(RELEASE);
     delay(500);
     Serial.println("GREEN");
-    SetSpeed(125);
+    SetSpeed(valSpeed);
     MotorFL.run(FORWARD);
     MotorFR.run(FORWARD);
     MotorBL.run(BACKWARD);
@@ -215,7 +215,7 @@ void readColor() {
     MotorBR.run(RELEASE);
     delay(500);
     Serial.println("RED");
-    SetSpeed(125);
+    SetSpeed(valSpeed);
     MotorFL.run(BACKWARD);
     MotorFR.run(BACKWARD);
     MotorBL.run(FORWARD);
@@ -227,7 +227,7 @@ void readColor() {
     MotorBR.run(RELEASE);
   } else if (white >= 150) {
     Serial.println("WHITE");
-    SetSpeed(85);
+    SetSpeed(valSpeed);
     MotorFL.run(BACKWARD);
     MotorFR.run(FORWARD);
     MotorBL.run(FORWARD);
