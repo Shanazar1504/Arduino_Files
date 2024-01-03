@@ -3,7 +3,7 @@
 #include <MFRC522.h>
 #include <SPI.h>
 
-#define RST_PIN         9          // Configurable, see typical pin layout above
+#define RST_PIN         1          // Configurable, see typical pin layout above
 #define SS_PIN          10         // Configurable, see typical pin layout above
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 

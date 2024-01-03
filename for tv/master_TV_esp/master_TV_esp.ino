@@ -5,13 +5,13 @@
 #include <SoftwareSerial.h>
 
 //Static IP address configuration
-IPAddress staticIP(192, 168, 0, 158); //ESP static ip
+IPAddress staticIP(192, 168, 0, 246); //ESP static ip
 IPAddress gateway(192, 168, 0, 1);   //IP Address of your WiFi Router (Gateway)
 IPAddress subnet(255, 255, 255, 0);  //Subnet mask
 IPAddress dns(8, 8, 8, 8);  //DNS
  
-const char* ssid = "Test";
-const char* password = "12345678";
+const char* ssid = "Link_9860";
+const char* password = "test12345";
 const char* deviceName = "tvv";
 String serverUrl = "192.168.0.252";
 String payload;

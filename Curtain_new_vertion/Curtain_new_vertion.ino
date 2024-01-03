@@ -34,9 +34,9 @@ void response() {
 
 void request() {
   server.send(200, "text/html", "Device is working");
-  digitalWrite(button2, LOW);
-  delay(1000);
   digitalWrite(button2, HIGH);
+  delay(1000);
+  digitalWrite(button2, LOW);
 }
 
 void setup() {

@@ -11,34 +11,34 @@ const int button1 = 2;
 void setup() {
   Serial.begin(9600);
   pinMode(button1, INPUT);
-//  digitalWrite(button1, 0);
+  //  digitalWrite(button1, 0);
   // Set up LCD
-  lcd.begin(16, 2);
+  lcd.init();
   lcd.backlight();
   myservo.attach(9);
+  lcd.clear();
+    lcd.setCursor(2, 0);
+    lcd.print("Organized ");
 }
 
 void loop() {
- if (digitalRead (button1) == 1){
-//  Serial.println("pressed");
-  lcd.clear();
-  lcd.setCursor(2, 0);
-  lcd.print("Organized ");
-//  myservo.write(90);
-//  delay(1000);
-//  myservo.write(0);
- }
- else {
-   Serial.println("unpressed");
-//     lcd.clear();
-//  lcd.setCursor(2, 0);
-//  lcd.print("No organized ");
- }
+  if (digitalRead (button1) == 1) {
+    //  Serial.println("pressed");
+    //  myservo.write(90);
+    //  delay(1000);
+    //  myservo.write(0);
+  }
+  else {
+    Serial.println("unpressed");
+    //     lcd.clear();
+    //  lcd.setCursor(2, 0);
+    //  lcd.print("No organized ");
+  }
 }
-void pill_dis(){
-    // Display initial values on LCD
+void pill_dis() {
+  // Display initial values on LCD
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("Time: ");
-//  lcd.print(setHour, setMinute);
+  //  lcd.print(setHour, setMinute);
 }

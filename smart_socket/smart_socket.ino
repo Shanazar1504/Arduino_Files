@@ -1,14 +1,13 @@
-#include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const int Relay1 = 0;
-const int Relay2 = 1;
-const int Relay3 = 4;
+const int Relay1 = 4;
+const int Relay2 = 5;
+const int Relay3 = 16;
 
 const char* ssid = "Test";
-const char* password = "12345678";
+const char* password = "test1234";
 
 ESP8266WebServer server(80);
 void returnCheck() {
@@ -79,12 +78,12 @@ void setup() {
   server.begin();
   Serial.println("Server started");
   server.on("/check/", returnCheck);
-  server.on("/Relay_1_on/", Relay1on);
-  server.on("/Relay_2_on/", Relay2on);
-  server.on("/Relay_3_on/", Relay3on);
-  server.on("/Relay_1_off/", Relay1off);
-  server.on("/Relay_2_off/", Relay2off);
-  server.on("/Relay_3_off/", Relay3off);
+  server.on("/light_on/", Relay1on);
+  server.on("/tefal_on/", Relay2on);
+  server.on("/heat_on/", Relay3on);
+  server.on("/light_off/", Relay1off);
+  server.on("/tefal_off/", Relay2off);
+  server.on("/heat_off/", Relay3off);
 }
 
 void loop() {

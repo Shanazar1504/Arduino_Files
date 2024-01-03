@@ -18,6 +18,46 @@ int servo1 = 90;
 int servo2 = 90;
 int servo3 = 90;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 int bt_data;
 
 const int pingPin = 12; // Trigger Pin of Ultrasonic Sensor

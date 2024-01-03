@@ -9,8 +9,7 @@ const int value1 = -5500;
 const int value2 = 5500;
 const int magnetic = 4;
 int state = 0;
-char *controller;file:///media/moon2103/TOSHIBA%20EXT+99363200225/hezret%20glass/ESP32-CAM-RC-CAR-master/CameraWebServer_gum/CameraWebServer_gum.ino
-
+char *controller;
 
 void setup() {
   Serial.begin(9600);
@@ -37,28 +36,24 @@ void loop() {
   Serial.print(" | GyZ = "); Serial.println(GyZ);
   if (GyX <= value1)
   {
-    mySwitch.send(2, 10);
+    mySwitch.send(1, 10);
     Serial.println("One");
   }
   else if (GyX >= value2) {
-    mySwitch.send(3, 10);
+    mySwitch.send(2, 10);
     Serial.println("Yza");
   }
   else if (GyY <= value1) {
-    mySwitch.send(4, 10);
+    mySwitch.send(3, 10);
     Serial.println("Chepe");
   }
   else if (GyY >= value2) {
-    mySwitch.send(5, 10);
+    mySwitch.send(4, 10);
     Serial.println("Saga");
   }
-  else if (digitalRead(magnetic) == 1) {
-    mySwitch.send(6, 10);
-    Serial.println("ach");
-  }
-  else if (digitalRead(magnetic) == 0) {
-    mySwitch.send(7, 10);
-    Serial.println("gyss");
-  }
+   else {
+    mySwitch.send(5, 10);
+    Serial.println("stop");
+   }
   delay(100);
 }
