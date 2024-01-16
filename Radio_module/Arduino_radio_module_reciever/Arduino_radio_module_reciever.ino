@@ -1,7 +1,9 @@
 #include <RH_ASK.h>
 #include <SPI.h>
+#include <Servo.h>
 
 RH_ASK rf_driver;
+ServoTimer2 myServo;
 
 const int fr = 4;
 const int fl = 5;
@@ -15,6 +17,9 @@ void setup() {
   pinMode(fl, OUTPUT);
   pinMode(br, OUTPUT);
   pinMode(bl, OUTPUT);
+
+  myServo.attach(8);  // Use the appropriate pin for your servo
+  myServo.write(90);  // Set the initial position of the servo
 
   digitalWrite(fr, LOW);
   digitalWrite(fl, LOW);
@@ -30,36 +35,41 @@ void loop() {
     Serial.print("Message Received: ");
     Serial.println((char*)buf);
 
-    if (buf[0] == '1') {
+    if (buf[0] == 'A') {
       Serial.println("One");
       digitalWrite(fr, HIGH);
       digitalWrite(fl, HIGH);
       digitalWrite(br, LOW);
       digitalWrite(bl, LOW);
-    } else if (buf[0] == '2') {
+      myServo.write(0);  // Adjust the angle for your specific setup
+    } else if (buf[0] == 'B') {
       Serial.println("Yza");
       digitalWrite(fr, LOW);
       digitalWrite(fl, LOW);
       digitalWrite(br, HIGH);
       digitalWrite(bl, HIGH);
-    } else if (buf[0] == '4') {
+      myServo.write(90);  // Adjust the angle for your specific setup
+    } else if (buf[0] == 'C') {
       Serial.println("Saga");
       digitalWrite(fr, HIGH);
       digitalWrite(fl, LOW);
       digitalWrite(br, LOW);
       digitalWrite(bl, HIGH);
-    } else if (buf[0] == '3') {
+      myServo.write(180);  // Adjust the angle for your specific setup
+    } else if (buf[0] == 'D') {
       Serial.println("Chepe");
       digitalWrite(fr, LOW);
       digitalWrite(fl, HIGH);
       digitalWrite(br, HIGH);
       digitalWrite(bl, LOW);
-    } else if (buf[0] == '5') {
+      myServo.write(90);  // Adjust the angle for your specific setup
+    } else if (buf[0] == 'E') {
       Serial.println("Stop");
       digitalWrite(fr, LOW);
       digitalWrite(fl, LOW);
       digitalWrite(br, LOW);
-      digitalWrite(bl, LOW);
+      digitalWrite(bl, HIGH);
+      myServo.write(90);  // Adjust the angle for your specific setup
     }
   }
 }

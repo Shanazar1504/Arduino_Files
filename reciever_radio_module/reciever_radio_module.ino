@@ -2,6 +2,7 @@
 #include <RH_ASK.h>
 // Include dependant SPI Library
 #include <SPI.h>
+#include <Servo.h>
 
 // Create Amplitude Shift Keying Object
 RH_ASK rf_driver;
@@ -16,15 +17,15 @@ void setup()
 
 void loop()
 {
-  // Set buffer to size of expected message
-  uint8_t buf[11];
-  uint8_t buflen = sizeof(buf);
-  // Check if received packet is correct size
-  if (rf_driver.recv(char))
-  {
-
-    // Message received with valid checksum
-    Serial.print("Message Received: ");
-    Serial.println(char);
-  }
+  //  // Set buffer to size of expected message
+  //  uint8_t buf[11];
+  //  uint8_t buflen = sizeof(buf);
+  //  // Check if received packet is correct size
+  //  if (rf_driver.recv(char))
+  //  {
+  //
+  //    // Message received with valid checksum
+  //    Serial.print("Message Received: ");
+  //    Serial.println();
+  //  }
 }

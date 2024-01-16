@@ -190,7 +190,7 @@ void loop() {
     MotorBL.run(RELEASE);
     MotorBR.run(RELEASE);
   }
-  else if (r > 160 && g > 145 && b < 180)
+  else if (r > 130 && g > 70 && b < 90)
   {
     Serial.println("Colour Green");
     SetSpeed(valSpeed);
@@ -204,7 +204,7 @@ void loop() {
     MotorBL.run(RELEASE);
     MotorBR.run(RELEASE);
   }
-  else if (r < 100 && g < 122 && b < 99)
+  else if (r < 150 && g < 165 && b < 80)
   {
     Serial.println("Colour White");
     SetSpeed(valSpeed);

@@ -31,6 +31,18 @@ void setup() {
   Serial.begin(115200);
 
 
+  if (!rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
+
+  if (!rtc.isrunning()) {
+    Serial.println("RTC is NOT running!");
+    // You can set the RTC to the date & time this sketch was compiled
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+
+  }
+
   // Connect to WiFi network
   Serial.println();
   Serial.println();
@@ -63,24 +75,13 @@ void setup() {
 
   Serial.println("Charging:");
 
-  // if (!rtc.begin()) {
-  //    Serial.println("Couldn't find RTC");
-  //    while (1);
-  //  }
-  //
-  //  if (!rtc.isrunning()) {
-  //    Serial.println("RTC is NOT running!");
-  //    // You can set the RTC to the date & time this sketch was compiled
-  //    rtc.adjust(DateTime(F(__TIME__)));
-  //
-  //  }
+
 
 }
 
 void loop() {
-  server.handleClient();
-//  showTime();
-
+  showTime();
+  server.handleClient(); 
 }
 
 void sendDataFromMaster() {
@@ -99,6 +100,7 @@ void updateDisplay() {
 
   // Assuming your TM1637 display has 4 digits
   display.showNumberDec(value, false, 4);
+  delay(2500);
 
   Serial.print("Charging: ");
   Serial.print(value);
@@ -110,13 +112,21 @@ void showTime() {
   int hours = now.hour();
   int minutes = now.minute();
 
+  // Toggle the dots every second
+  static bool dotsOn = true;
+  dotsOn = !dotsOn;
+
+  // Display time with blinking dots on TM1637
+  if (dotsOn) {
+    display.showNumberDecEx((hours * 100) + minutes, 0b11100000, true);
+  } else {
+    display.showNumberDecEx((hours * 100) + minutes, 0b00000000, true);
+  }
+  delay(1000);
+
   // Serial print the current hour and minute
   Serial.print("Current time: ");
   Serial.print(hours);
   Serial.print(":");
-  if (minutes < 10) {
-    Serial.print("0"); // Add leading zero for minutes less than 10
-  }
-  Serial.println(minutes);
-  delay(1000);
+  Serial.print(minutes);
 }

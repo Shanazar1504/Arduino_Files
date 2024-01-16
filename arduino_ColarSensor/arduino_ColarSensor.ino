@@ -10,7 +10,7 @@ int red, green, blue, white;
 
 tcs3200 tcs(14, 15, 16, 17, 18); // (S0, S1, S2, S3, output pin)  //
 
-int valSpeed = 85;
+int valSpeed = 105;
 String readString; // declaring string
 
 void setup() {
@@ -61,16 +61,16 @@ void Commandd() {
       case 'R':
         // turn right
         SetSpeed(valSpeed);
-        MotorFL.run(FORWARD);
-        MotorFR.run(FORWARD);
+        MotorFL.run(BACKWARD);
+        MotorFR.run(BACKWARD);
         MotorBL.run(BACKWARD);
         MotorBR.run(BACKWARD);
         break;
       case 'L':
         // turn left
         SetSpeed(valSpeed);
-        MotorFL.run(BACKWARD);
-        MotorFR.run(BACKWARD);
+        MotorFL.run(FORWARD);
+        MotorFR.run(FORWARD);
         MotorBL.run(FORWARD);
         MotorBR.run(FORWARD);
         break;
@@ -181,26 +181,26 @@ void readColor() {
   Serial.print(white);
   Serial.print("    ");
 
-//  SetSpeed(valSpeed);
-//  MotorFL.run(RELEASE);
-//  MotorFR.run(FORWARD);
-//  MotorBL.run(FORWARD);
-//  MotorBR.run(RELEASE);
+  //  SetSpeed(valSpeed);
+  //  MotorFL.run(RELEASE);
+  //  MotorFR.run(FORWARD);
+  //  MotorBL.run(FORWARD);
+  //  MotorBR.run(RELEASE);
 
-  if (red <= 9 && green >= 5 ) {
+  if (red <= 9 && green >= 8 ) {
     delay(700);
     SetSpeed(valSpeed);
-    MotorFL.run(RELEASE);
-    MotorFR.run(FORWARD);
-    MotorBL.run(FORWARD);
-    MotorBR.run(RELEASE);
-    delay(500);
+    MotorFL.run(FORWARD);
+    MotorFR.run(BACKWARD);
+    MotorBL.run(BACKWARD);
+    MotorBR.run(FORWARD);
+    delay(700);
     Serial.println("GREEN");
     SetSpeed(valSpeed);
-    MotorFL.run(FORWARD);
-    MotorFR.run(FORWARD);
-    MotorBL.run(BACKWARD);
-    MotorBR.run(BACKWARD);
+        MotorFL.run(BACKWARD);
+        MotorFR.run(BACKWARD);
+        MotorBL.run(BACKWARD);
+        MotorBR.run(BACKWARD);
     delay(1000);
     MotorFL.run(RELEASE);
     MotorFR.run(RELEASE);
@@ -209,17 +209,17 @@ void readColor() {
   } else if (red >= 25 && blue <= 15) {
     delay(700);
     SetSpeed(valSpeed);
-    MotorFL.run(RELEASE);
-    MotorFR.run(FORWARD);
-    MotorBL.run(FORWARD);
-    MotorBR.run(RELEASE);
+    MotorFL.run(FORWARD);
+    MotorFR.run(BACKWARD);
+    MotorBL.run(BACKWARD);
+    MotorBR.run(FORWARD);
     delay(500);
     Serial.println("RED");
     SetSpeed(valSpeed);
-    MotorFL.run(BACKWARD);
-    MotorFR.run(BACKWARD);
-    MotorBL.run(FORWARD);
-    MotorBR.run(FORWARD);
+        MotorFL.run(FORWARD);
+        MotorFR.run(FORWARD);
+        MotorBL.run(FORWARD);
+        MotorBR.run(FORWARD);
     delay(1000);
     MotorFL.run(RELEASE);
     MotorFR.run(RELEASE);
@@ -228,11 +228,11 @@ void readColor() {
   } else if (white >= 150) {
     Serial.println("WHITE");
     SetSpeed(valSpeed);
-    MotorFL.run(BACKWARD);
-    MotorFR.run(FORWARD);
-    MotorBL.run(FORWARD);
-    MotorBR.run(BACKWARD);
-    delay(1000);
+        MotorFL.run(FORWARD);
+        MotorFR.run(BACKWARD);
+        MotorBL.run(BACKWARD);
+        MotorBR.run(FORWARD);
+    delay(1500);
     MotorFL.run(RELEASE);
     MotorFR.run(RELEASE);
     MotorBL.run(RELEASE);
