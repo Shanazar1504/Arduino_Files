@@ -14,14 +14,18 @@ void setup() {
 
 
 void loop() {
-  uint8_t buf[1];
+ uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
   uint8_t buflen = sizeof(buf);
 
   if (rf_driver.recv(buf, &buflen)) {
-    Serial.print("Message Received: ");
+    // Message received, print it
+    buf[buflen] = '\0';
+    Serial.print("Message received: ");
     Serial.println((char*)buf);
 
-    if (buf[0] == '1') {
+    // Check if the received message is "K is equal to 10!"
+    if (strcmp((char*)buf, "K is equal to 10!") == 0) {
+      // Activate the buzzer
       buzzerToneFunction();
 
     } else {

@@ -3,22 +3,23 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-float kk;
 
 ESP8266WebServer server(80);
 
-void returnLoad() {
-  if (kk > 0) {
-    server.send(200, "text/html", "" + String(kk));
-  }
-  else {
-    server.send(200, "text/html", "0");
-  }
+void returnDht() {
+
+}
+
+void returnFire() {
+
+}
+void returnGas() {
+
 }
 
 
-const char* ssid = "Admin";
-const char* password = "admin123";
+const char* ssid = "Test";
+const char* password = "test12345";
 
 void setup() {
   Serial.begin(115200);
@@ -44,18 +45,21 @@ void setup() {
   Serial.print("http://");
   Serial.print(WiFi.localIP());
   Serial.println("/");
-  server.on("/checkLoad/", returnLoad);
+  server.on("/checkDht/", returnDht);
+  server.on("/checkGas/", returnGas);
+  server.on("/checkFire/", returnFire);
+
   server.begin();
   Serial.println("Server started");
 }
 
 void loop () {
-if (Serial.available() != 0) {
-  String input = Serial.readStringUntil('\n');
-  Serial.println(input);
-  input.trim();
-  kk = input.toFloat();
-  Serial.println(kk, 2);
+  if (Serial.available() != 0) {
+    String input = Serial.readStringUntil('\n');
+    Serial.println(input);
+    input.trim();
+    //  kk = input.toFloat();
+    //  Serial.println(kk, 2);
 
-}
+  }
 }

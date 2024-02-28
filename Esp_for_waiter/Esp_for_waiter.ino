@@ -11,8 +11,8 @@ IPAddress gateway(192, 168, 43, 1);   //IP Address of your WiFi Router (Gateway)
 IPAddress subnet(255, 255, 255, 0);  //Subnet mask
 IPAddress dns(8, 8, 8, 8);  //DNS
 
-const char* ssid = "Waiter";
-const char* password = "waiter123";
+const char* ssid = "user";
+const char* password = "12345678";
 const char* deviceName = "Waiter";
 String serverUrl = "192.168.43.252";
 String payload;

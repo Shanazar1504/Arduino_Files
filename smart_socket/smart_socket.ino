@@ -2,12 +2,12 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const int Relay1 = 4;
-const int Relay2 = 5;
-const int Relay3 = 16;
+const int Relay1 = 0;
+const int Relay2 = 1;
+const int Relay3 = 2;
 
-const char* ssid = "Test";
-const char* password = "test1234";
+const char* ssid = "ELECTRONICLAB";
+const char* password = "Electronic123";
 
 ESP8266WebServer server(80);
 void returnCheck() {

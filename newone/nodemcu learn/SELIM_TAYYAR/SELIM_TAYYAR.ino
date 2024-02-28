@@ -6,17 +6,22 @@ const int motor1B = 3;
 const int motor2A = 4;
 const int motor2B = 5;
 
-int speed = 125;
+int speed = 225;
+const int led = 6;
 
 // Define Bluetooth module pins
-SoftwareSerial bluetooth(10, 11); // RX, TX
+SoftwareSerial bluetooth(7, 8); // RX, TX
 
 void setup() {
+    digitalWrite(led, 1);
+
   // Set motor control pins as outputs
   pinMode(motor1A, OUTPUT);
   pinMode(motor1B, OUTPUT);
   pinMode(motor2A, OUTPUT);
   pinMode(motor2B, OUTPUT);
+  pinMode(led, OUTPUT);
+
 
   // Set up Bluetooth serial communication
   bluetooth.begin(9600);
@@ -27,14 +32,16 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    char command = Serial.read();
+  if (bluetooth.available() > 0) {
+    char command = bluetooth.read();
+    Serial.println(command);
 
     switch (command) {
-      case 'F':
+      case 'B':
         forward();
         break;
-      case 'B':
+      case 'F
+      ':
         backward();
         break;
       case 'L':
@@ -45,6 +52,12 @@ void loop() {
         break;
       case 'S':
         stop();
+        break;
+      case 'w':
+  digitalWrite(led, 0);
+        break;
+      case 'W':
+  digitalWrite(led, 1);
         break;
     }
   }

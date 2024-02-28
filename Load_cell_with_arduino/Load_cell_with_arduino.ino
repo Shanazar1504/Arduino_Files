@@ -1,46 +1,62 @@
-/*
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/arduino-load-cell-hx711/
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files.
-  
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-*/
-
-// Calibrating the load cell
+#include <Arduino.h>
 #include "HX711.h"
+#include <SoftwareSerial.h>
+#include <RH_ASK.h>
+#include <SPI.h>
 
 // HX711 circuit wiring
-const int LOADCELL_DOUT_PIN = 5;
-const int LOADCELL_SCK_PIN = 6;
+const int LOADCELL_DOUT_PIN = 3;
+const int LOADCELL_SCK_PIN = 2;
 
 HX711 scale;
+int k;
+
+// Bluetooth module setup
+SoftwareSerial bluetoothSerial(4, 5); // RX, TX
+
 
 void setup() {
   Serial.begin(9600);
+  bluetoothSerial.begin(9600); // Bluetooth module baud rate
+  Serial.println("HX711 Demo");
+  Serial.println("Initializing the scale");
+
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+
+  scale.set_scale(199.558);
+  scale.tare(); // reset the scale to 0
+
+  if (!rf_driver.init())
+    Serial.println("RF driver init failed");
 }
 
 void loop() {
+  Serial.print("one reading: \t");
+  Serial.println(scale.get_units());
 
-  if (scale.is_ready()) {
-    scale.set_scale();    
-    Serial.println("Tare... remove any weights from the scale.");
-    delay(5000);
-    scale.tare();
-    Serial.println("Tare done...");
-    Serial.print("Place a known weight on the scale...");
-    delay(5000);
-    long reading = scale.get_units(10);
-    Serial.print("Result: ");
-    Serial.println(reading);
-  } 
-  else {
-    Serial.println("HX711 not found.");
+  if (0 < scale.get_units() && scale.get_units() < 50) {
+    k = 10;
+    senddata();
+  } else if (50 < scale.get_units() && scale.get_units() < 100) {
+    k = 30;
+  } else if (100 < scale.get_units() && scale.get_units() < 150) {
+    k = 60;
+  } else if (150 < scale.get_units() && scale.get_units() < 200) {
+    k = 80;
+  } else if (200 < scale.get_units() && scale.get_units() < 250) {
+    k = 100;
   }
+
+  // Send value of k over Bluetooth
+    bluetoothSerial.print("G:");
+    bluetoothSerial.println(k);
   delay(1000);
 }
 
-//calibration factor will be the (reading)/(known weight)
+void senddata (){
+
+    const char* message = "K is equal to 10!";
+    rf_driver.send((uint8_t *)message, strlen(message));
+    rf_driver.waitPacketSent();
+ 
+}
